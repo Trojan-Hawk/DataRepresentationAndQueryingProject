@@ -1,7 +1,7 @@
 # Data Representation And Querying Project
 
-				GMIT year 3 semester 1 project(2017). 
-Written in the go language, using AJAX and implementing the Eliza program.
+					GMIT year 3 semester 1 project(2017). 
+	Written in the go language, using AJAX and implementing the Eliza program.
 
 ## Introduction
 My name is Timothy Cassidy, I am a 3rd year student in software design and 
