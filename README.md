@@ -1,9 +1,9 @@
-#Data Representation And Querying Project
+# Data Representation And Querying Project
 
 				GMIT year 3 semester 1 project(2017). 
 Written in the go language, using AJAX and implementing the Eliza program.
 
-##Introduction
+## Introduction
 My name is Timothy Cassidy, I am a 3rd year student in software design and 
 program development. I am making this chatbot as part of our Data 
 Representation And Querying module. I will be programming this project 
@@ -11,7 +11,7 @@ using HTML and Go. I will be using AJAX to update the HTML page without
 reloading and I will be designing the chatbot using the Eliza program as a 
 guideline.
 	
-##Using the Chatbot
+## Using the Chatbot
 To use this chatbot you must first download or clone this gitHub repository.
 You can do this by clicking the download button on this repository main page
 or you can open up a new console window on your PC/Laptop, navigate to the 
@@ -27,5 +27,5 @@ repository and the files it contains. Right now, you should see that you are
 on branch master, everything is up to date with origin/master and your working 
 directory is clean.
 
-##References
+## References
 						
