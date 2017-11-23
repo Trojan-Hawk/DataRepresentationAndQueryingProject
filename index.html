@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Source: https://v4-alpha.getbootstrap.com/getting-started/introduction/ -->
+
+<html lang="en">
+  <head>
+	<title>Eliza Chatbot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- CSS -->
+	<style>
+		#mylist {
+			padding-top: 5%;
+			background-color: none;
+			height: 70%;
+		}
+	</style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Eliza</h1>
+    </div>
+
+    <div class="container">
+      <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
+      <form id="user">
+        <div class="form-group">
+          <label for="userInput">User input</label>
+          <input type="text" class="form-control" id="userInput" aria-describedby="user-input-help" placeholder="Enter text">
+          <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+		<div id="mylist">
+			
+		</div>
+      </form>
+    </div>
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	
+	<script>
+		var userText = document.getElementById("userInput");
+	
+		$("#user").submit(
+			function(event) {
+			event.preventDefault();
+			$.get('/Eliza', { value: $('#userInput').val() } )
+			.done(function (data) {
+				var res = data.split("Eliza: ", 2);
+				console.log(res)
+				// appending the user input onto the mylist div
+				$("#mylist").append(res[0] + ' <br>');
+				// appending the eliza response onto the mylist div
+				$("#mylist").append("Eliza: " + res[1] + ' <br>');
+				userText.value = "";
+			})
+        });
+		// split data at eliza***
+		// then append two items
+    </script>
+	
+  </body>
+</html>
