@@ -51,6 +51,9 @@ func main() {
 	// using the system clock to set a random seed value
 	rand.Seed(time.Now().UTC().UnixNano())
 	
+	// 
+	http.Handle("/gitRepo/", http.StripPrefix("/gitRepo/", http.FileServer(http.Dir("gitRepo"))))
+	
 	// call handler function
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/Eliza", Eliza)
