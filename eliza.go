@@ -74,28 +74,28 @@ func generateResponse(user string) string {
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
-	regXp := regexp.MustCompile(`^hi(.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^hi(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
-	regXp := regexp.MustCompile(`^hey(.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^hey(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
-	regXp := regexp.MustCompile(`^good morning(.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^good morning(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
-	regXp := regexp.MustCompile(`^good evening(.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^good evening(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
-	regXp := regexp.MustCompile(`^good afternoon(.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^good afternoon(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	if len(subString) > 1 {
 		return greetings[rand.Intn(len(greetings))]
 	}// if
@@ -106,8 +106,8 @@ func generateResponse(user string) string {
 	}// if
 	
 	// if the input begins with how are you
-	regXp = regexp.MustCompile(`^how are you (.*)`)
-	subString := regXp.FindStringSubmatch(user)
+	regXp = regexp.MustCompile(`^how are you(.*)`)
+	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
 		return feelings[rand.Intn(len(feelings))]
@@ -136,6 +136,14 @@ func generateResponse(user string) string {
 	
 	if len(subString) > 1 {
 		return sorry[rand.Intn(len(feelings))]
+	}// if
+	
+	// if the input contains apologise
+	regXp = regexp.MustCompile(`(.*)robot(.*)`)
+	subString = regXp.FindStringSubmatch(user)
+	
+	if len(subString) > 1 {
+		return robotResponses[rand.Intn(len(robotResponses))]
 	}// if
 	
 	// if the input contains remember
