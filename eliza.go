@@ -1,5 +1,8 @@
-package main
+// Student Name: Timothy Cassidy
+// Student Number: G00333333
 
+package main
+// imported packages
 import (
 	"net/http"
 	"log"
@@ -10,9 +13,9 @@ import (
 	"regexp"
 )
 
-func passString(name string, s string) (strOut string) {
+func nameToString(name string, s string) (strOut string) {
 	return(name + s)
-}
+}// passString
 
 //The main function begins with a call to http.HandleFunc, which tells the http package to handle all requests to the web root ("/") with handler.
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -20,31 +23,29 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "index.html")
 }// handler
 
-
 func Eliza(w http.ResponseWriter, r *http.Request){
-	
+	// getting a handle on the userInput value
 	userInput := r.URL.Query().Get("value")
 	
+	// string variables
 	str := ""
 	reply := ""
 	
-	// log.Println(userInput)
-	
 	// storing the user input in user var 
-	user := passString("User: ", userInput)
+	user := nameToString("User: ", userInput)
 	
 	// generating eliza response based on user input
 	reply = generateResponse(userInput)
 	
 	// storing the reply in bot var
-	bot := passString("Eliza: ", reply)
+	bot := nameToString("Eliza: ", reply)
 	
 	// adding the user and bot strings together
 	str = user + bot
 	
 	// passing the strings to the js
 	fmt.Fprintf(w,"%s",str)
-}
+}// Eliza
 
 func main() {
 	// using the system clock to set a random seed value
@@ -55,15 +56,57 @@ func main() {
 	http.HandleFunc("/Eliza", Eliza)
     log.Println("Preparing chatbot, please enter this in your web browser - Localhost:8080")
     http.ListenAndServe(":8080", nil)	
-	
-}
+}// main
 
 func generateResponse(user string) string {
+	// if no input was given
+	if(len(user) < 1){
+		return zeroVal[rand.Intn(len(zeroVal))]
+	}// if
+
 	// MustCompile is like Compile but panics if the expression cannot be parsed. 
 	// It simplifies safe initialization of global variables holding compiled 
 	// regular expressions. 
+	
+	// if the input begins with hello, hi, hey, good morning, good evening, good afternoon
+	regXp := regexp.MustCompile(`^hello(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	regXp := regexp.MustCompile(`^hi(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	regXp := regexp.MustCompile(`^hey(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	regXp := regexp.MustCompile(`^good morning(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	regXp := regexp.MustCompile(`^good evening(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	regXp := regexp.MustCompile(`^good afternoon(.*)`)
+	subString := regXp.FindStringSubmatch(user)
+	if len(subString) > 1 {
+		return greetings[rand.Intn(len(greetings))]
+	}// if
+	
+	// if input length is less than 5 and not a greeting
+	if(len(user) < 5){
+		return convoStarters[rand.Intn(len(convoStarters))]
+	}// if
+	
 	// if the input begins with how are you
-	regXp := regexp.MustCompile(`how are you (.*)`)
+	regXp = regexp.MustCompile(`^how are you (.*)`)
 	subString := regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
@@ -71,16 +114,16 @@ func generateResponse(user string) string {
 	}// if
 	
 	// if the input begins with what
-	regXp = regexp.MustCompile(`what (.*)`)
+	regXp = regexp.MustCompile(`^what (.*)`)
 	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
 		str := tidyOutput(subString[1])
-		return "What do you mean what" + str
+		return "What do you mean what " + str
 	}// if
 	
 	// if the input contains sorry
-	regXp = regexp.MustCompile(`(.*)sorry (.*)`)
+	regXp = regexp.MustCompile(`(.*)sorry(.*)`)
 	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
@@ -88,7 +131,7 @@ func generateResponse(user string) string {
 	}// if
 	
 	// if the input contains apologise
-	regXp = regexp.MustCompile(`(.*)apologise (.*)`)
+	regXp = regexp.MustCompile(`(.*)apologise(.*)`)
 	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
@@ -96,108 +139,155 @@ func generateResponse(user string) string {
 	}// if
 	
 	// if the input contains remember
-	regXp = regexp.MustCompile(`(.*)remember (.*)`)
+	regXp = regexp.MustCompile(`(.*)remember(.*)`)
 	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
 		// if the input contains i remember
-		regXp = regexp.MustCompile(`(.*)i remember (.*)`)
+		regXp = regexp.MustCompile(`(.*)i remember(.*)`)
 		subString = regXp.FindStringSubmatch(user)
 		
 		if len(subString) > 1 {
 			str := iRemeber[rand.Intn(len(iRemeber))]
 			re := tidyOutput(subString[2])
+			re = strings.Replace(re, "?", "", 1)
 			str = strings.Replace(str, "string", re, 1)
-			str = strings.Replace(str, "?", "", 1)
 			return str
 		}// if
 		
 		// if the input contains do you remember
-		regXp = regexp.MustCompile(`(.*)do you remember (.*)`)
+		regXp = regexp.MustCompile(`(.*)do you remember(.*)`)
 		subString = regXp.FindStringSubmatch(user)
 		
 		if len(subString) > 1 {
 			str := doYouRemeber[rand.Intn(len(doYouRemeber))]
 			re := tidyOutput(subString[2])
+			re = strings.Replace(re, "?", "", 1)
 			str = strings.Replace(str, "string", re, 1)
-			str = strings.Replace(str, "?", "", 1)
 			return str
 		}// if
 		
 		// if the input contains you remember
-		regXp = regexp.MustCompile(`(.*)you remember (.*)`)
+		regXp = regexp.MustCompile(`(.*)you remember(.*)`)
 		subString = regXp.FindStringSubmatch(user)
 		
 		if len(subString) > 1 {
 			str := youRemember[rand.Intn(len(youRemember))]
 			re := tidyOutput(subString[2])
+			re = strings.Replace(re, "?", "", 1)
 			str = strings.Replace(str, "string", re, 1)
-			str = strings.Replace(str, "?", "", 1)
 			return str
 		}// if
 	}// if
 
 	// if the input contains forget
-	regXp = regexp.MustCompile(`(.*)remember (.*)`)
+	regXp = regexp.MustCompile(`(.*)forget(.*)`)
 	subString = regXp.FindStringSubmatch(user)
 	
 	if len(subString) > 1 {
 		// if the input contains i forget
-		regXp = regexp.MustCompile(`(.*)i forget (.*)`)
+		regXp = regexp.MustCompile(`(.*)i forget(.*)`)
 		subString = regXp.FindStringSubmatch(user)
 		
 		if len(subString) > 1 {
 			str := iForget[rand.Intn(len(iForget))]
 			re := tidyOutput(subString[2])
+			re = strings.Replace(re, "?", "", 1)
 			str = strings.Replace(str, "string", re, 1)
-			str = strings.Replace(str, "?", "", 1)
 			return str
 		}// if
 		
 		// if the input contains did you forget
-		regXp = regexp.MustCompile(`(.*)did you forget (.*)`)
+		regXp = regexp.MustCompile(`(.*)did you forget(.*)`)
 		subString = regXp.FindStringSubmatch(user)
 		
 		if len(subString) > 1 {
 			str := didYouForget[rand.Intn(len(didYouForget))]
 			re := tidyOutput(subString[2])
+			re = strings.Replace(re, "?", "", 1)
 			str = strings.Replace(str, "string", re, 1)
-			str = strings.Replace(str, "?", "", 1)
 			return str
 		}// if
 		
 	}// if
 	
+	// if the input contains if
+	regXp = regexp.MustCompile("(.*)if(.*)")
+	subString = regXp.FindStringSubmatch(user)
+	
+	if len(subString) > 1 {
+		str := ifPhrase[rand.Intn(len(ifPhrase))]
+		re := tidyOutput(subString[2])
+		re = strings.Replace(re, "?", "", 1)
+		str = strings.Replace(str, "string", re, 1)
+		return str
+	}// if
+		
 	// Intn returns, as an int, a non-negative pseudo-random number
 	// using this number to randomly pick a response from the array
 	return responseItems[rand.Intn(len(responseItems))]
-}
+}// generateResponse
 
 // function to tidy up the string to output
 func tidyOutput(str string) string {
 	// replacing the full stop with a question mark
 	str = strings.Replace(str, ".", "?", 1)
 	// reflecting the pronouns in the captured groups
-	str = strings.Replace(str, "my", "Your", 1)
-	str = strings.Replace(str, "your", "my", 1)
-	str = strings.Replace(str, "yours", "mine", 1)
-	str = strings.Replace(str, "mine", "Yours", 1)
-	str = strings.Replace(str, "am", "Are", 1)
-	str = strings.Replace(str, "are", "am", 1)
-	str = strings.Replace(str, "myself", "Yourself", 1)
-	str = strings.Replace(str, "yourself", "myself", 1)
-	str = strings.Replace(str, "i", "you", 1)
-	str = strings.Replace(str, "you", "I", 1)
-	str = strings.Replace(str, "you’re", "I'm", 1)
-	str = strings.Replace(str, "i'm", "you’re", 1)
-	str = strings.Replace(str, "me", "you", 1)
-	str = strings.Replace(str, "same", "alike", 1)
-	str = strings.Replace(str, "were", "was", 1)
+	str = strings.Replace(str, "( |)my( |)", " Your ", 1)
+	str = strings.Replace(str, "( |)your( |)", " my ", 1)
+	str = strings.Replace(str, "( |)yours( |)", " mine ", 1)
+	str = strings.Replace(str, "( |)mine( |)", " Yours ", 1)
+	str = strings.Replace(str, "( |)am( |)", " Are ", 1)
+	str = strings.Replace(str, "( |)are( |)", " am ", 1)
+	str = strings.Replace(str, "( |)myself( |)", " Yourself ", 1)
+	str = strings.Replace(str, "( |)yourself( |)", " myself ", 1)
+	str = strings.Replace(str, "( |)you( |)", " I ", 1)
+	str = strings.Replace(str, "( |)You( |)", " I ", 1)
+	str = strings.Replace(str, "( |)i( |)", "you", 1)
+	str = strings.Replace(str, "( |)you’re( |)", " I'm ", 1)
+	str = strings.Replace(str, "( |)i'm( |)", " you’re ", 1)
+	str = strings.Replace(str, "( |)me( |)", " you ", 1)
+	str = strings.Replace(str, "( |)same( |)", " alike", 1)
+	str = strings.Replace(str, "( |)were( |)", " was", 1)
 	return strings.ToLower(str)
 }// tidyOutput
 
 // RESPONSES
-// you already - I forgot about that.
+var greetings = []string {
+	"How do you do.",
+	"Hello There.",
+	"Hi.",
+	"Hey.",
+	"Hello.",
+	"Hey there.",
+}// greetings
+
+var ifPhrase = []string {
+	"Do you think it's likely that string?",
+	"Do you wish that string?",
+	"What do you know about string?",
+	"Really, if string?",
+	"What would you do if string?",
+	"But what are the chances that string?",
+	"What does this speculation lead to?",
+}// ifPhrase
+
+var zeroVal = []string {
+	"Say something...",
+	"**Dead Silence**",
+	"Why the silence?",
+	"Have I offended you?",
+	"I know silence is golden, but this is rediculous.",
+	"Are you there?",
+	"This is very one sided.",
+	"Silence...",
+	"Okay...",
+	"Anyone there?",
+	"Well, say something.",
+	"Silent treatment. How mature.",
+	"Did I offend you?",
+	"Are you okay?",
+}// zeroVal
 
 var perhaps = []string {
 	"You don't seem quite certain.",
@@ -206,7 +296,7 @@ var perhaps = []string {
 	"You aren't sure?",
 	"Don't you know?",
 	"How likely, would you estimate?",
-}
+}// perhaps
 
 // i forget responses
 var iForget = []string {
@@ -217,7 +307,7 @@ var iForget = []string {
 	"Could it be a mental block?",
 	"Are you generally forgetful?",
 	"Do you think you are suppressing string?",
-}
+}// iForget
 
 // did you forget responses
 var didYouForget = []string {
@@ -226,32 +316,32 @@ var didYouForget = []string {
 	"Would it bother you if I forgot string?",
 	"Why should I recall string just now ?",
 	"Tell me more about string.",
-}
+}// didYouForget
 
 // i remember responses
 var iRemeber = []string {
 	"Do you often think of string?",
 	"Does thinking of string bring anything else to mind?",
-	"What else do you recollect?",
+	"What else do you remember?",
 	"Why do you remember string just now?",
 	"What in the present situation reminds you of string?",
 	"What is the connection between me and string?",
 	"What else does string remind you of ?",
-}
+}// iRemeber
 
 // do you remember responses
 var doYouRemeber = []string {
 	"Did you think I would forget string?",
-	"Why do you think I should recall string now?",
+	"Why do you think I should remember string now?",
 	"What about string?",
 	"You mentioned string?",
-}
+}// doYouRemeber
 
 // you remember responses
 var youRemember = []string {
 	"How could I forget string?",
 	"What about string should I remember?",
-}
+}// youRemember
 
 // sorry responses
 var sorry = []string {
@@ -259,7 +349,7 @@ var sorry = []string {
 	"Apologies are not necessary.",
 	"I've told you that apologies are not required.",
 	"It did not bother me.  Please continue.",
-}
+}// sorry
 
 // generic responses string array
 var responseItems = []string {

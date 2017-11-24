@@ -1,68 +1,96 @@
+<!--Student Name: Timothy Cassidy-->
+<!--Student Number: G00333333-->
 <!DOCTYPE html>
 <!-- Source: https://v4-alpha.getbootstrap.com/getting-started/introduction/ -->
-
+<!-- Source:  -->
+<!-- Source:  -->
 <html lang="en">
-  <head>
-	<title>Eliza Chatbot</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- CSS -->
-	<style>
-		#mylist {
-			padding-top: 5%;
-			background-color: none;
-			height: 70%;
-		}
-	</style>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Eliza</h1>
-    </div>
-
-    <div class="container">
-      <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
-      <form id="user">
-        <div class="form-group">
-          <label for="userInput">User input</label>
-          <input type="text" class="form-control" id="userInput" aria-describedby="user-input-help" placeholder="Enter text">
-          <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Submit</button>
-		<div id="mylist">
-			
+	<head>
+		<title>Eliza Chatbot</title>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- CSS -->
+		<style>
+			html {
+				overflow-y: scroll;
+			}
+			h1 {
+				text-align: center;
+			}
+			#mylist {
+				padding-top: 10%;
+				padding-bottom: 15%;
+				background-color: none;
+				height: 70%;
+				padding-bottom: %5;
+			}
+			#userInput {
+				width: 60%;
+				padding: .5rem .75rem;
+				font-size: 1rem;
+				line-height: 1.25;
+				display: inline;
+				border: 1px solid rgba(0,0,0,.15);
+				border-radius: .25rem;
+			}
+			#button {
+				width: 20%;
+				display: inline;
+			}
+			#Interact {
+				margin: auto;
+				margin-bottom: 1%;
+				position:fixed;
+				bottom:0px;
+				width:100%;
+			}
+		</style>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container">
+			<h1>Eliza Chatbot</h1>
 		</div>
-      </form>
-    </div>
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-	
-	<script>
-		var userText = document.getElementById("userInput");
-	
-		$("#user").submit(
-			function(event) {
-			event.preventDefault();
-			$.get('/Eliza', { value: $('#userInput').val() } )
-			.done(function (data) {
-				var res = data.split("Eliza: ", 2);
-				console.log(res)
-				// appending the user input onto the mylist div
-				$("#mylist").append(res[0] + ' <br>');
-				// appending the eliza response onto the mylist div
-				$("#mylist").append("Eliza: " + res[1] + ' <br>');
-				userText.value = "";
-			})
-        });
-		// split data at eliza***
-		// then append two items
-    </script>
-	
-  </body>
+		<div class="container">
+			<form id="user">
+				<div id="mylist">
+					
+				</div>
+				<div id="Interact">
+					<input type="text" id="userInput" placeholder="Enter text">
+					<button type="submit" class="btn btn-primary" id="button">Submit</button>
+				</div>
+			</form>
+		</div>
+		<!-- jQuery first, then CloudFlare, then BootstrapJS, then go AJAX script -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script>
+			var userText = document.getElementById("userInput");
+		
+			$("#user").submit(
+				function(event) {
+				event.preventDefault();
+				$.get('/Eliza', { value: $('#userInput').val() } )
+				.done(function (data) {
+					var res = data.split("Eliza: ", 2);
+					// appending the user input onto the mylist div
+					$("#mylist").append(res[0] + ' <br><br>');
+					// wait response
+					setTimeout(function(){
+						// appending the eliza response onto the mylist div
+						$("#mylist").append("Eliza: " + res[1] + ' <br><br>');
+						// scrolling down to the most recent messages
+						$("html, body").animate({ scrollTop: $(document).height() }, 800);
+					}, 500);
+					userText.value = "";
+				})
+			});
+			// split data at eliza***
+			// then append two items
+		</script>	
+	</body>
 </html>
